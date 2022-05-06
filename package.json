@@ -1,6 +1,16 @@
 {
   "name": "tnd-migration",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "ASIS에서 TOBE DB로 데이터를 이관해주는 기능을 제공하는 웹 서비스",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/po4tion/tnd-migration"
+  },
+  "author": {
+    "name": "김동규 (Kim DongGyu)",
+    "email": "po4tion0429@gmail.com",
+    "url": "https://github.com/po4tion"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
