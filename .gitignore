@@ -9,3 +9,6 @@
 
 # prettier
 .prettierignore
+
+# env
+.env.local
