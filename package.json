@@ -20,7 +20,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@chakra-ui/react": "2.0.0-next.4",
+    "@chakra-ui/react": "2.0.0-next.2",
     "@emotion/react": "11",
     "@emotion/styled": "11",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
