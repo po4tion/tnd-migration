@@ -1,17 +1,13 @@
-import { Box, Button, Container, useColorMode } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { TemplateASIS, TemplateTOBE } from "../components";
 
 const Home: NextPage = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-
   return (
-    <Container>
-      <Box>
-        <Button onClick={toggleColorMode}>
-          Toggle {colorMode === "light" ? "Dark" : "Light"}
-        </Button>
-      </Box>
-    </Container>
+    <HStack spacing={10} mt={2}>
+      <TemplateASIS />
+      <TemplateTOBE />
+    </HStack>
   );
 };
 
