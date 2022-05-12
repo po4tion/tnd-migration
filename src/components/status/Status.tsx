@@ -1,5 +1,5 @@
 import { MethodLayout } from "../layout";
-import StatusFormAsis from "./StatusFormAsis";
+// import StatusFormAsis from "./StatusFormAsis";
 import StatusAnnouncement from "./StatusAnnouncement";
 import StatusHeader from "./StatusHeader";
 import ConnectButton from "./ConnectButton";
@@ -10,8 +10,9 @@ function Status({ type }: { type: string }) {
     <MethodLayout>
       <StatusHeader type={type} />
       <StatusAnnouncement />
-      {type === "ASIS" ? <StatusFormAsis /> : <StatusFormTobe />}
-
+      {/* {type === "ASIS" ? <StatusFormAsis /> : <StatusFormTobe />}
+       */}
+      <StatusFormTobe />
       <ConnectButton type={type} />
     </MethodLayout>
   );
