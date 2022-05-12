@@ -7,7 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-function StatusFormTOBE() {
+function StatusFormTobe() {
   return (
     <VStack w="20rem" mt="2">
       <FormControl isRequired>
@@ -76,4 +76,4 @@ function StatusFormTOBE() {
   );
 }
 
-export default StatusFormTOBE;
+export default StatusFormTobe;

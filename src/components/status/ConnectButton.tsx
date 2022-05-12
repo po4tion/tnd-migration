@@ -1,6 +1,41 @@
 import { Box, Button } from "@chakra-ui/react";
+import { useRecoilValue } from "recoil";
+import {
+  asisDbState,
+  asisDbTypeState,
+  asisIdState,
+  asisIpAddressState,
+  asisPasswordState,
+  asisPortState,
+} from "../../atoms";
+import { handleAsisConenct } from "../../utils";
 
 function ConnectButton({ type }: { type: string }) {
+  const asisDbType = useRecoilValue(asisDbTypeState);
+  const asisIpAddress = useRecoilValue(asisIpAddressState);
+  const asisPort = useRecoilValue(asisPortState);
+  const asisDb = useRecoilValue(asisDbState);
+  const asisId = useRecoilValue(asisIdState);
+  const asisPassword = useRecoilValue(asisPasswordState);
+  const status = {
+    asisDbType,
+    asisIpAddress,
+    asisPort,
+    asisDb,
+    asisId,
+    asisPassword,
+  };
+
+  const handleConnect = async () => {
+    try {
+      const fetchData = await handleAsisConenct(status);
+
+      console.log("fetchData: ", fetchData);
+    } catch {
+      console.error("connect Error!");
+    }
+  };
+
   return (
     <Box mt="2" w="20rem">
       <Button
@@ -10,6 +45,7 @@ function ConnectButton({ type }: { type: string }) {
         size="sm"
         isDisabled={type === "TOBE" ? true : false}
         bg={type === "TOBE" ? "gray.300" : "none"}
+        onClick={handleConnect}
       >
         연결하기
       </Button>
