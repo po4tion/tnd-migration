@@ -11,8 +11,6 @@ function Status({ type }: { type: string }) {
       <StatusHeader type={type} />
       <StatusAnnouncement />
       {type === "ASIS" ? <StatusFormAsis /> : <StatusFormTobe />}
-
-      <StatusFormTobe />
       <ConnectButton type={type} />
     </MethodLayout>
   );

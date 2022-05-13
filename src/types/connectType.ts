@@ -6,3 +6,8 @@ export interface asisConnectType {
   readonly asisId: string | null;
   readonly asisPassword: string | null;
 }
+
+export interface asisPreviewType extends asisConnectType {
+  readonly selectSchema: string | null;
+  readonly selectTable: string | null;
+}

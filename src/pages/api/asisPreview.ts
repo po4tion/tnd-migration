@@ -33,16 +33,18 @@ async function asisConnect(
           password: asisPassword,
         }); */
 
-        const response = await instance.post("/database/connect/", {
+        const response = await instance.post("/database/tabledata/", {
           dbms: "MSSQL",
           server: "124.53.4.95",
           port: 31433,
           database: "AdventureWorks2019",
           username: "tnd",
           password: "tnd123!@#",
+          schema: status.selectSchema,
+          table: status.selectTable,
         });
 
-        res.status(200).json(response.data);
+        res.status(200).json(response.data.data);
       } catch (err) {
         res.status(500).send({ error: "failed to fetch data" });
       }

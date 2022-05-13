@@ -1,6 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
+  asisConnectState,
   asisDbState,
   asisDbTypeState,
   asisIdState,
@@ -8,6 +9,7 @@ import {
   asisPasswordState,
   asisPortState,
 } from "../../atoms";
+import { asisPreviewState } from "../../atoms/asis/previewState";
 import { handleAsisConenct } from "../../utils";
 
 function ConnectButton({ type }: { type: string }) {
@@ -17,20 +19,30 @@ function ConnectButton({ type }: { type: string }) {
   const asisDb = useRecoilValue(asisDbState);
   const asisId = useRecoilValue(asisIdState);
   const asisPassword = useRecoilValue(asisPasswordState);
-  const status = {
-    asisDbType,
-    asisIpAddress,
-    asisPort,
-    asisDb,
-    asisId,
-    asisPassword,
-  };
+  const setAsisConnect = useSetRecoilState(asisConnectState);
+  const setConnectState = useSetRecoilState(asisPreviewState);
 
   const handleConnect = async () => {
+    const status = {
+      asisDbType,
+      asisIpAddress,
+      asisPort,
+      asisDb,
+      asisId,
+      asisPassword,
+    };
+
     try {
       const fetchData = await handleAsisConenct(status);
+      const { ConnectionSuccess, SCHEMA_LIST } = fetchData;
 
-      console.log("fetchData: ", fetchData);
+      /* *
+       * fetching success
+       */
+      if (ConnectionSuccess) {
+        setAsisConnect(true);
+        setConnectState(SCHEMA_LIST);
+      }
     } catch {
       console.error("connect Error!");
     }
