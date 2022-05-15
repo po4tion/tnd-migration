@@ -34,7 +34,7 @@ function ColumnForm() {
               isReadOnly
               size="xs"
               placeholder={COLUMN_NAME}
-              overflowX="hidden"
+              overflow="hidden"
               whiteSpace="nowrap"
               textOverflow="ellipsis"
             />
@@ -72,170 +72,34 @@ function ColumnForm() {
   }, [asisColumn]);
 
   const skeletons = () => {
-    return (
-      <>
-        <Tr>
-          <Td>
-            <Checkbox />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              overflowX="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="teal" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="purple" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="whatsapp" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="orange" />
-          </Td>
-        </Tr>
-        <Tr>
-          <Td>
-            <Checkbox />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              overflowX="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="teal" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="purple" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="whatsapp" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="orange" />
-          </Td>
-        </Tr>
-        <Tr>
-          <Td>
-            <Checkbox />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              overflowX="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="teal" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="purple" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="whatsapp" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="orange" />
-          </Td>
-        </Tr>
-        <Tr>
-          <Td>
-            <Checkbox />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              overflowX="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="teal" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="purple" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="whatsapp" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="orange" />
-          </Td>
-        </Tr>
-        <Tr>
-          <Td>
-            <Checkbox />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              overflowX="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
-          </Td>
-          <Td>
-            <Input isReadOnly size="xs" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="teal" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="purple" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="whatsapp" />
-          </Td>
-          <Td textAlign="center">
-            <Checkbox colorScheme="orange" />
-          </Td>
-        </Tr>
-      </>
-    );
+    return new Array(5).fill(0).map((_, idx) => (
+      <Tr key={idx}>
+        <Td>
+          <Checkbox />
+        </Td>
+        <Td>
+          <Input isReadOnly size="xs" />
+        </Td>
+        <Td>
+          <Input size="xs" />
+        </Td>
+        <Td>
+          <Input isReadOnly size="xs" />
+        </Td>
+        <Td textAlign="center">
+          <Checkbox colorScheme="teal" />
+        </Td>
+        <Td textAlign="center">
+          <Checkbox colorScheme="purple" />
+        </Td>
+        <Td textAlign="center">
+          <Checkbox colorScheme="whatsapp" />
+        </Td>
+        <Td textAlign="center">
+          <Checkbox colorScheme="orange" />
+        </Td>
+      </Tr>
+    ));
   };
 
   return (
