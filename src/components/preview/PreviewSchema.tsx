@@ -1,19 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
-import { useSetRecoilState } from "recoil";
-import { selectSchemaState } from "../../atoms/asis/previewState";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+  previewDataState,
+  selectSchemaState,
+  selectTableState,
+} from "../../atoms";
 
 function PreviewSchema({ isConnect, list }: { isConnect: boolean; list: any }) {
   const setSelectSchema = useSetRecoilState(selectSchemaState);
+  const setSelectTable = useSetRecoilState(selectTableState);
+  const resetPreviewData = useResetRecoilState(previewDataState);
 
   const handleSelect = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
       const { value } = e.target;
 
-      setSelectSchema(value);
+      if (!value.length) {
+        setSelectSchema(null);
+        setSelectTable(null);
+        resetPreviewData();
+      } else {
+        setSelectSchema(value);
+      }
     },
-    [setSelectSchema]
+    [resetPreviewData, setSelectSchema, setSelectTable]
   );
 
   const options = useCallback(() => {

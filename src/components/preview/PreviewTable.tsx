@@ -1,30 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  asisDbState,
-  asisDbTypeState,
-  asisIdState,
-  asisIpAddressState,
-  asisPasswordState,
-  asisPortState,
-} from "../../atoms";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   previewDataState,
   selectSchemaState,
-} from "../../atoms/asis/previewState";
-import { handleAsisPreview } from "../../utils";
+  selectTableState,
+} from "../../atoms";
 
 function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
   const selectSchema = useRecoilValue(selectSchemaState);
-  const asisDbType = useRecoilValue(asisDbTypeState);
-  const asisIpAddress = useRecoilValue(asisIpAddressState);
-  const asisPort = useRecoilValue(asisPortState);
-  const asisDb = useRecoilValue(asisDbState);
-  const asisId = useRecoilValue(asisIdState);
-  const asisPassword = useRecoilValue(asisPasswordState);
-  const setPreviewData = useSetRecoilState(previewDataState);
+  const setSelectTable = useSetRecoilState(selectTableState);
+  const resetPreviewData = useResetRecoilState(previewDataState);
 
   const options = useCallback(() => {
     const tableName = list?.[selectSchema as string];
@@ -41,37 +28,17 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
   }, [list, selectSchema]);
 
   const handleSelect = useCallback(
-    async (e: ChangeEvent<HTMLSelectElement>) => {
+    (e: ChangeEvent<HTMLSelectElement>) => {
       const { value } = e.target;
-      const status = {
-        asisDbType,
-        asisIpAddress,
-        asisPort,
-        asisDb,
-        asisId,
-        asisPassword,
-        selectSchema,
-        selectTable: value,
-      };
 
-      try {
-        const fetchData = await handleAsisPreview(status);
-
-        setPreviewData(fetchData);
-      } catch {
-        console.error("connect Error!");
+      if (!value.length) {
+        resetPreviewData();
+        setSelectTable(null);
+      } else {
+        setSelectTable(value);
       }
     },
-    [
-      asisDb,
-      asisDbType,
-      asisId,
-      asisIpAddress,
-      asisPassword,
-      asisPort,
-      selectSchema,
-      setPreviewData,
-    ]
+    [resetPreviewData, setSelectTable]
   );
 
   return (
