@@ -20,3 +20,14 @@ export const handleAsisPreview = async (status: asisPreviewType) => {
 
   return result;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const handleAsisColumn = async (status: any) => {
+  const result = await axios
+    .post("/api/asisColumn", {
+      status,
+    })
+    .then((response) => response.data);
+
+  return result;
+};

@@ -11,7 +11,7 @@ function Template() {
     >
       <Status type="ASIS" />
       <Preview />
-      <ColumnInfo />
+      <ColumnInfo type="ASIS" />
     </Box>
   );
 }

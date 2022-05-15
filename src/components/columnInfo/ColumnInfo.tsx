@@ -1,14 +1,15 @@
 import { MethodLayout } from "../layout";
 import ColumnForm from "./ColumnForm";
+import ColumnFormTobe from "./ColumnFormTobe";
 import ColumnInfoHeader from "./ColumnInfoHeader";
 
-function Preview() {
+function ColumnInfo({ type }: { type: string }) {
   return (
     <MethodLayout>
       <ColumnInfoHeader />
-      <ColumnForm />
+      {type === "ASIS" ? <ColumnForm /> : <ColumnFormTobe />}
     </MethodLayout>
   );
 }
 
-export default Preview;
+export default ColumnInfo;

@@ -11,7 +11,7 @@ function Template() {
     >
       <Status type="TOBE" />
       <Mapping />
-      <ColumnInfo />
+      <ColumnInfo type="TOBE" />
     </Box>
   );
 }

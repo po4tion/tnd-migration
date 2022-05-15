@@ -25,3 +25,8 @@ export const previewDataState = atom<any>({
   key: "previewDataState",
   default: null,
 });
+
+export const asisColumnState = atom<any>({
+  key: "asisColumnState",
+  default: null,
+});

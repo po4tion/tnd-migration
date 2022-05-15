@@ -2,6 +2,7 @@ import { Box, Button } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
+  asisColumnState,
   asisDbState,
   asisDbTypeState,
   asisIdState,
@@ -13,7 +14,12 @@ import {
   selectSchemaState,
   selectTableState,
 } from "../../atoms";
-import { handleAsisPreview, handleCheckBtn } from "../../utils";
+import {
+  handleAsisColumn,
+  handleAsisPreview,
+  handleCheckBtn,
+  objectDepth,
+} from "../../utils";
 
 function CheckButton() {
   const selectSchema = useRecoilValue(selectSchemaState);
@@ -26,6 +32,7 @@ function CheckButton() {
   const asisId = useRecoilValue(asisIdState);
   const asisPassword = useRecoilValue(asisPasswordState);
   const setPreviewData = useSetRecoilState(previewDataState);
+  const setAsisColumn = useSetRecoilState(asisColumnState);
   const [previewLoading, setPreviewLoading] =
     useRecoilState(previewLoadingState);
 
@@ -45,10 +52,17 @@ function CheckButton() {
 
     try {
       const fetchData = await handleAsisPreview(status);
+      const fetchColumn = await handleAsisColumn(status);
 
       if (fetchData?.length) {
         setPreviewData(fetchData);
         setPreviewLoading(false);
+      }
+
+      if (!fetchColumn?.ConnectionSuccess) {
+        const result = objectDepth(fetchColumn, selectTable as string);
+
+        setAsisColumn(result);
       }
     } catch {
       console.error("connect Error!");
@@ -65,6 +79,7 @@ function CheckButton() {
     selectTable,
     setPreviewData,
     setPreviewLoading,
+    setAsisColumn,
   ]);
 
   return (

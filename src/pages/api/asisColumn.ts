@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { instance } from "../../config";
+import { objectDepth } from "../../utils";
 
 type ResponseData = {
   readonly error: string;
 };
 
-async function asisPreview(
+async function asisColumn(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
@@ -15,6 +16,7 @@ async function asisPreview(
     case "POST":
       try {
         const { status } = req.body;
+
         /* const {
           asisDbType,
           asisIpAddress,
@@ -33,7 +35,7 @@ async function asisPreview(
           password: asisPassword,
         }); */
 
-        const response = await instance.post("/database/tabledata/", {
+        const response = await instance.post("/database/columninfo/", {
           dbms: "MSSQL",
           server: "124.53.4.95",
           port: 31433,
@@ -44,7 +46,7 @@ async function asisPreview(
           table: status.selectTable,
         });
 
-        res.status(200).json(response.data.data);
+        res.status(200).json(response.data);
       } catch (err) {
         res.status(500).send({ error: "failed to fetch data" });
       }
@@ -55,4 +57,4 @@ async function asisPreview(
   }
 }
 
-export default asisPreview;
+export default asisColumn;
