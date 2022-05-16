@@ -14,6 +14,41 @@ import { useRecoilValue } from "recoil";
 import { asisColumnState } from "../../atoms";
 import { asisColumnType } from "../../types/columnType";
 
+function Skeletons() {
+  return (
+    <>
+      {new Array(5).fill(0).map((_, idx) => (
+        <Tr key={idx}>
+          <Td>
+            <Checkbox />
+          </Td>
+          <Td>
+            <Input size="xs" isReadOnly />
+          </Td>
+          <Td>
+            <Input size="xs" isReadOnly />
+          </Td>
+          <Td>
+            <Input size="xs" isReadOnly />
+          </Td>
+          <Td textAlign="center">
+            <Checkbox colorScheme="teal" isDisabled aria-label="체크박스" />
+          </Td>
+          <Td textAlign="center">
+            <Checkbox colorScheme="purple" isDisabled aria-label="체크박스" />
+          </Td>
+          <Td textAlign="center">
+            <Checkbox colorScheme="whatsapp" isDisabled aria-label="체크박스" />
+          </Td>
+          <Td textAlign="center">
+            <Checkbox colorScheme="orange" isDisabled aria-label="체크박스" />
+          </Td>
+        </Tr>
+      ))}
+    </>
+  );
+}
+
 function ColumnForm() {
   const asisColumn = useRecoilValue(asisColumnState);
 
@@ -24,10 +59,17 @@ function ColumnForm() {
       return (
         <Tr key={COLUMN_ID}>
           <Td>
-            <Checkbox />
+            <Checkbox isChecked />
           </Td>
           <Td>
-            <Input isReadOnly size="xs" placeholder={COLUMN_ID} />
+            <Input
+              isReadOnly
+              size="xs"
+              placeholder={COLUMN_ID}
+              overflow="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+            />
           </Td>
           <Td>
             <Input
@@ -40,67 +82,47 @@ function ColumnForm() {
             />
           </Td>
           <Td>
-            <Input isReadOnly size="xs" placeholder={COL_TYPE} />
+            <Input
+              isReadOnly
+              size="xs"
+              placeholder={COL_TYPE}
+              overflow="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+            />
           </Td>
           <Td textAlign="center">
             <Checkbox
               colorScheme="teal"
               isChecked={NULL_YN === "NOT NULL" ? false : true}
+              aria-label="NULL 여부"
             />
           </Td>
           <Td textAlign="center">
             <Checkbox
               colorScheme="purple"
               isChecked={PK.length ? true : false}
+              aria-label="기본키 여부"
             />
           </Td>
           <Td textAlign="center">
             <Checkbox
               colorScheme="whatsapp"
               isChecked={FK.length ? true : false}
+              aria-label="외래키 여부"
             />
           </Td>
           <Td textAlign="center">
             <Checkbox
               colorScheme="orange"
               isChecked={UQ.length ? true : false}
+              aria-label="유니크키 여부"
             />
           </Td>
         </Tr>
       );
     });
   }, [asisColumn]);
-
-  const skeletons = () => {
-    return new Array(5).fill(0).map((_, idx) => (
-      <Tr key={idx}>
-        <Td>
-          <Checkbox />
-        </Td>
-        <Td>
-          <Input isReadOnly size="xs" />
-        </Td>
-        <Td>
-          <Input size="xs" />
-        </Td>
-        <Td>
-          <Input isReadOnly size="xs" />
-        </Td>
-        <Td textAlign="center">
-          <Checkbox colorScheme="teal" />
-        </Td>
-        <Td textAlign="center">
-          <Checkbox colorScheme="purple" />
-        </Td>
-        <Td textAlign="center">
-          <Checkbox colorScheme="whatsapp" />
-        </Td>
-        <Td textAlign="center">
-          <Checkbox colorScheme="orange" />
-        </Td>
-      </Tr>
-    ));
-  };
 
   return (
     <TableContainer mt={2}>
@@ -118,7 +140,7 @@ function ColumnForm() {
           </Tr>
         </Thead>
 
-        <Tbody>{asisColumn ? handleTr() : skeletons()}</Tbody>
+        <Tbody>{asisColumn ? handleTr() : <Skeletons />}</Tbody>
       </Table>
     </TableContainer>
   );
