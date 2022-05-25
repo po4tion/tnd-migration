@@ -24,15 +24,19 @@ async function asisColumn(
           asisDb,
           asisId,
           asisPassword,
+          selectSchema,
+          selectTable,
         } = status;
 
-        const response = await instance.post("/database/connect/", {
+        const response = await instance.post("/database/columninfo/", {
           dbms: asisDbType,
           server: asisIpAddress,
           port: asisPort,
           database: asisDb,
           username: asisId,
           password: asisPassword,
+          schema: selectSchema,
+          table: selectTable,
         }); */
 
         const response = await instance.post("/database/columninfo/", {

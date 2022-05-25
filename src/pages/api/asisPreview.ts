@@ -22,15 +22,19 @@ async function asisPreview(
           asisDb,
           asisId,
           asisPassword,
+          selectSchema,
+          selectTable,
         } = status;
 
-        const response = await instance.post("/database/connect/", {
+        const response = await instance.post("/database/tabledata/", {
           dbms: asisDbType,
           server: asisIpAddress,
           port: asisPort,
           database: asisDb,
           username: asisId,
           password: asisPassword,
+          schema: selectSchema,
+          table: selectTable,
         }); */
 
         const response = await instance.post("/database/tabledata/", {

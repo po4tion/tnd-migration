@@ -9,3 +9,4 @@ export const objectDepth = (column: any, table: string) => {
     secondKey
   ];
 };
+
