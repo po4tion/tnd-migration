@@ -21,6 +21,7 @@ function ConnectButton({ type }: { type: string }) {
   const asisPassword = useRecoilValue(asisPasswordState);
   const setAsisConnect = useSetRecoilState(asisConnectState);
   const setConnectState = useSetRecoilState(asisPreviewState);
+  const toast = useToast();
 
   const handleConnect = async () => {
     const status = {
@@ -37,14 +38,30 @@ function ConnectButton({ type }: { type: string }) {
       const { ConnectionSuccess, SCHEMA_LIST } = fetchData;
 
       /* *
-       * fetching success
+       * fetching success / failure
        */
       if (ConnectionSuccess) {
         setAsisConnect(true);
         setConnectState(SCHEMA_LIST);
+        toast({
+          title: "연결 성공",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+      } else {
+        toast({
+          title: "연결 실패",
+          description: "DB 정보를 확인해주세요.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "bottom-right",
+        });
       }
     } catch {
-      console.error("connect Error!");
+      console.error("Connect Error!");
     }
   };
 
