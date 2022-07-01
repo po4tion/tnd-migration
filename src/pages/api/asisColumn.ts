@@ -17,7 +17,7 @@ async function asisColumn(
       try {
         const { status } = req.body;
 
-        /* const {
+        const {
           asisDbType,
           asisIpAddress,
           asisPort,
@@ -28,16 +28,16 @@ async function asisColumn(
           selectTable,
         } = status;
 
-        const response = await instance.post("/database/columninfo/", {
-          dbms: asisDbType,
-          server: asisIpAddress,
-          port: asisPort,
-          database: asisDb,
-          username: asisId,
-          password: asisPassword,
-          schema: selectSchema,
-          table: selectTable,
-        }); */
+        // const response = await instance.post("/database/columninfo/", {
+        //   dbms: asisDbType,
+        //   server: asisIpAddress,
+        //   port: asisPort,
+        //   database: asisDb,
+        //   username: asisId,
+        //   password: asisPassword,
+        //   schema: selectSchema,
+        //   table: selectTable,
+        // });
 
         const response = await instance.post("/database/columninfo/", {
           dbms: "MSSQL",

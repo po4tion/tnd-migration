@@ -15,7 +15,7 @@ async function asisConnect(
     case "POST":
       try {
         const { status } = req.body;
-        /* const {
+        const {
           asisDbType,
           asisIpAddress,
           asisPort,
@@ -24,14 +24,14 @@ async function asisConnect(
           asisPassword,
         } = status;
 
-        const response = await instance.post("/database/connect/", {
-          dbms: asisDbType,
-          server: asisIpAddress,
-          port: asisPort,
-          database: asisDb,
-          username: asisId,
-          password: asisPassword,
-        }); */
+        // const response = await instance.post("/database/connect/", {
+        //   dbms: asisDbType,
+        //   server: asisIpAddress,
+        //   port: asisPort,
+        //   database: asisDb,
+        //   username: asisId,
+        //   password: asisPassword,
+        // });
 
         const response = await instance.post("/database/connect/", {
           dbms: "MSSQL",

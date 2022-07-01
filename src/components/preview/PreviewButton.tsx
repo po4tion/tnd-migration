@@ -66,7 +66,7 @@ function PreviewButton() {
         데이터 미리보기
       </Button>
 
-      <Modal onClose={onClose} isOpen={isOpen} size="xl" isCentered>
+      <Modal onClose={onClose} isOpen={isOpen} size="6xl" isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{selectTable ? selectTable : "테이블"}</ModalHeader>
@@ -82,7 +82,7 @@ function PreviewButton() {
             </TableContainer>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={onClose}>닫기</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
