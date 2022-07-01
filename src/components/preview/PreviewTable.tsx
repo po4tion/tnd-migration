@@ -15,6 +15,7 @@ import {
   previewDataState,
   selectSchemaState,
   selectTableState,
+  sliceState,
 } from "../../atoms";
 import { handleAsisColumn, objectDepth } from "../../utils";
 
@@ -32,6 +33,7 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
   const asisDb = useRecoilValue(asisDbState);
   const asisId = useRecoilValue(asisIdState);
   const asisPassword = useRecoilValue(asisPasswordState);
+  const resetSliceValue = useResetRecoilState(sliceState);
 
   const options = useCallback(() => {
     const tableName = list?.[selectSchema as string];
@@ -60,19 +62,22 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
         selectSchema,
         selectTable: value,
       };
+      resetSliceValue();
 
       if (!value.length) {
-        resetPreviewData();
         setSelectTable(null);
+        setCount(0);
       } else {
         setSelectTable(value);
         setCount(asisPreview[schema as string]["TABLE_NAME"][value]);
       }
 
+      resetPreviewData();
+
       try {
         const fetchColumn = await handleAsisColumn(status);
 
-        if (!fetchColumn?.ConnectionSuccess) {
+        if (fetchColumn?.ConnectionSuccess) {
           const result = objectDepth(fetchColumn, value);
 
           setAsisColumn(result);
@@ -87,6 +92,7 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
       asisId,
       asisPassword,
       selectSchema,
+      resetSliceValue,
       resetPreviewData,
       setSelectTable,
       setCount,
@@ -108,7 +114,7 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
           w="12rem"
           isDisabled={isConnect ? false : true}
           size="sm"
-          bg="gray.300"
+          bg={isConnect ? "whiteAlpha.100" : "gray.300"}
           onChange={handleSelect}
         >
           {options()}

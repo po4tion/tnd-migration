@@ -3,15 +3,21 @@ import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import {
+  asisColumnState,
+  countState,
   previewDataState,
   selectSchemaState,
   selectTableState,
+  sliceState,
 } from "../../atoms";
 
 function PreviewSchema({ isConnect, list }: { isConnect: boolean; list: any }) {
   const setSelectSchema = useSetRecoilState(selectSchemaState);
   const setSelectTable = useSetRecoilState(selectTableState);
   const resetPreviewData = useResetRecoilState(previewDataState);
+  const resetCount = useResetRecoilState(countState);
+  const resetSliceValue = useResetRecoilState(sliceState);
+  const resetColumn = useResetRecoilState(asisColumnState);
 
   const handleSelect = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
@@ -25,8 +31,18 @@ function PreviewSchema({ isConnect, list }: { isConnect: boolean; list: any }) {
 
       setSelectTable(null);
       resetPreviewData();
+      resetCount();
+      resetSliceValue();
+      resetColumn();
     },
-    [resetPreviewData, setSelectSchema, setSelectTable]
+    [
+      resetPreviewData,
+      setSelectSchema,
+      setSelectTable,
+      resetCount,
+      resetSliceValue,
+      resetColumn,
+    ]
   );
 
   const options = useCallback(() => {
@@ -53,7 +69,7 @@ function PreviewSchema({ isConnect, list }: { isConnect: boolean; list: any }) {
           w="12rem"
           isDisabled={isConnect ? false : true}
           size="sm"
-          bg="gray.300"
+          bg={isConnect ? "whiteAlpha.100" : "gray.300"}
           onChange={handleSelect}
         >
           {options()}

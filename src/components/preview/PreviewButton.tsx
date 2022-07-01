@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   FormControl,
   FormLabel,
@@ -40,6 +41,7 @@ import {
   previewLoadingState,
   selectSchemaState,
   selectTableState,
+  sliceState,
 } from "../../atoms";
 import { handleAsisPreview } from "../../utils";
 
@@ -56,10 +58,15 @@ function PreviewButton() {
   const [previewLoading, setPreviewLoading] =
     useRecoilState(previewLoadingState);
   const count = useRecoilValue(countState);
+  const [sliceValue, setSliceValue] = useRecoilState(sliceState);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleFetchData = useCallback(async () => {
     setPreviewLoading(true);
+
+    if (!sliceValue) {
+      setSliceValue(count);
+    }
 
     const status = {
       asisDbType,
@@ -78,6 +85,8 @@ function PreviewButton() {
       if (fetchData?.length) {
         setPreviewData(fetchData);
         setPreviewLoading(false);
+      } else {
+        setPreviewLoading(false);
       }
     } catch {
       console.error("connect Error!");
@@ -90,10 +99,13 @@ function PreviewButton() {
     asisIpAddress,
     asisPassword,
     asisPort,
+    count,
     selectSchema,
     selectTable,
     setPreviewData,
     setPreviewLoading,
+    setSliceValue,
+    sliceValue,
   ]);
 
   const handleTh = useCallback(() => {
@@ -111,14 +123,20 @@ function PreviewButton() {
       return null;
     }
 
-    return previewData?.map((obj: { [x: string]: any }, idx: number) => (
-      <Tr key={idx}>
-        {Object.keys(obj)?.map((key, idx) => (
-          <Td key={key + idx}>{obj[key]}</Td>
-        ))}
-      </Tr>
-    ));
-  }, [previewData]);
+    return previewData
+      ?.slice(0, sliceValue)
+      .map((obj: { [x: string]: any }, idx: number) => (
+        <Tr key={idx}>
+          {Object.keys(obj)?.map((key, idx) => (
+            <Td key={key + idx}>{obj[key]}</Td>
+          ))}
+        </Tr>
+      ));
+  }, [previewData, sliceValue]);
+
+  const handleCount = (value: string) => {
+    setSliceValue(parseInt(value));
+  };
 
   return (
     <Box mt="2" w="20rem">
@@ -142,7 +160,9 @@ function PreviewButton() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{selectTable} 데이터</ModalHeader>
+          <ModalHeader>
+            <Center>{selectTable} 데이터</Center>
+          </ModalHeader>
           <ModalCloseButton />
           {previewData?.length ? (
             <ModalBody overflow="scroll" maxH="600px">
@@ -162,7 +182,12 @@ function PreviewButton() {
                   <FormLabel htmlFor="ipAddressA" w="8rem" m="0" fontSize="sm">
                     건수
                   </FormLabel>
-                  <NumberInput defaultValue={count} min={0} max={count}>
+                  <NumberInput
+                    defaultValue={count}
+                    min={0}
+                    max={count}
+                    onChange={handleCount}
+                  >
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />

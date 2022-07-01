@@ -1,4 +1,5 @@
 import {
+  Box,
   Checkbox,
   Input,
   Table,
@@ -7,6 +8,7 @@ import {
   Td,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
@@ -62,34 +64,40 @@ function ColumnForm() {
             <Checkbox isChecked />
           </Td>
           <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              placeholder={COLUMN_ID}
-              overflow="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
+            <Tooltip label={COLUMN_ID}>
+              <Input
+                isReadOnly
+                size="xs"
+                placeholder={COLUMN_ID}
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+              />
+            </Tooltip>
           </Td>
           <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              placeholder={COLUMN_NAME}
-              overflow="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
+            <Tooltip label={COLUMN_NAME}>
+              <Input
+                isReadOnly
+                size="xs"
+                placeholder={COLUMN_NAME}
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+              />
+            </Tooltip>
           </Td>
           <Td>
-            <Input
-              isReadOnly
-              size="xs"
-              placeholder={COL_TYPE}
-              overflow="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-            />
+            <Tooltip label={COL_TYPE}>
+              <Input
+                isReadOnly
+                size="xs"
+                placeholder={COL_TYPE}
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+              />
+            </Tooltip>
           </Td>
           <Td textAlign="center">
             <Checkbox
@@ -125,24 +133,26 @@ function ColumnForm() {
   }, [asisColumn]);
 
   return (
-    <TableContainer mt={2}>
-      <Table size="sm" variant="unstyled">
-        <Thead>
-          <Tr>
-            <Th></Th>
-            <Th textAlign="center">컬럼ID</Th>
-            <Th textAlign="center">컬럼이름</Th>
-            <Th textAlign="center">컬럼속성</Th>
-            <Th textAlign="center">NULL</Th>
-            <Th textAlign="center">PK</Th>
-            <Th textAlign="center">FK</Th>
-            <Th textAlign="center">UQ</Th>
-          </Tr>
-        </Thead>
+    <Box overflow="scroll" maxH="840px">
+      <TableContainer mt={2}>
+        <Table size="sm" variant="unstyled">
+          <Thead>
+            <Tr>
+              <Th></Th>
+              <Th textAlign="center">컬럼ID</Th>
+              <Th textAlign="center">컬럼이름</Th>
+              <Th textAlign="center">컬럼속성</Th>
+              <Th textAlign="center">NULL</Th>
+              <Th textAlign="center">PK</Th>
+              <Th textAlign="center">FK</Th>
+              <Th textAlign="center">UQ</Th>
+            </Tr>
+          </Thead>
 
-        <Tbody>{asisColumn ? handleTr() : <Skeletons />}</Tbody>
-      </Table>
-    </TableContainer>
+          <Tbody>{asisColumn ? handleTr() : <Skeletons />}</Tbody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
 

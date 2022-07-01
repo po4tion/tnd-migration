@@ -35,3 +35,8 @@ export const countState = atom<number>({
   key: "countState",
   default: 0,
 });
+
+export const sliceState = atom<number>({
+  key: "sliceState",
+  default: 0,
+});
