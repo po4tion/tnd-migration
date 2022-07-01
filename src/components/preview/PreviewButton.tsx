@@ -2,6 +2,9 @@
 import {
   Box,
   Button,
+  Flex,
+  FormControl,
+  FormLabel,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,6 +12,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Table,
   TableContainer,
   Tbody,
@@ -19,14 +27,84 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { useRecoilValue } from "recoil";
-import { previewDataState, selectTableState } from "../../atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  asisColumnState,
+  asisDbState,
+  asisDbTypeState,
+  asisIdState,
+  asisIpAddressState,
+  asisPasswordState,
+  asisPortState,
+  countState,
+  previewDataState,
+  previewLoadingState,
+  selectSchemaState,
+  selectTableState,
+} from "../../atoms";
+import { handleAsisColumn, handleAsisPreview, objectDepth } from "../../utils";
 
 function PreviewButton() {
-  const previewData = useRecoilValue(previewDataState);
+  const selectSchema = useRecoilValue(selectSchemaState);
   const selectTable = useRecoilValue(selectTableState);
-
+  const asisDbType = useRecoilValue(asisDbTypeState);
+  const asisIpAddress = useRecoilValue(asisIpAddressState);
+  const asisPort = useRecoilValue(asisPortState);
+  const asisDb = useRecoilValue(asisDbState);
+  const asisId = useRecoilValue(asisIdState);
+  const asisPassword = useRecoilValue(asisPasswordState);
+  const [previewData, setPreviewData] = useRecoilState(previewDataState);
+  const setAsisColumn = useSetRecoilState(asisColumnState);
+  const [previewLoading, setPreviewLoading] =
+    useRecoilState(previewLoadingState);
+  const count = useRecoilValue(countState);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleFetchData = useCallback(async () => {
+    setPreviewLoading(true);
+
+    const status = {
+      asisDbType,
+      asisIpAddress,
+      asisPort,
+      asisDb,
+      asisId,
+      asisPassword,
+      selectSchema,
+      selectTable,
+    };
+
+    try {
+      const fetchData = await handleAsisPreview(status);
+      const fetchColumn = await handleAsisColumn(status);
+
+      if (fetchData?.length) {
+        setPreviewData(fetchData);
+        setPreviewLoading(false);
+      }
+
+      if (!fetchColumn?.ConnectionSuccess) {
+        const result = objectDepth(fetchColumn, selectTable as string);
+
+        setAsisColumn(result);
+      }
+    } catch {
+      console.error("connect Error!");
+      setPreviewLoading(false);
+    }
+  }, [
+    asisDb,
+    asisDbType,
+    asisId,
+    asisIpAddress,
+    asisPassword,
+    asisPort,
+    selectSchema,
+    selectTable,
+    setPreviewData,
+    setPreviewLoading,
+    setAsisColumn,
+  ]);
 
   const handleTh = useCallback(() => {
     if (previewData === null || !previewData?.length) {
@@ -53,36 +131,70 @@ function PreviewButton() {
   }, [previewData]);
 
   return (
-    <Box mt="2" w="9rem">
+    <Box mt="2" w="20rem">
       <Button
         w="100%"
         variant="outline"
         boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
-        isDisabled={previewData ? false : true}
         size="sm"
         bg="gray.300"
         onClick={onOpen}
+        isDisabled={count ? false : true}
       >
         데이터 미리보기
       </Button>
 
-      <Modal onClose={onClose} isOpen={isOpen} size="6xl" isCentered>
+      <Modal
+        onClose={onClose}
+        isOpen={isOpen}
+        size={previewData?.length ? "6xl" : "xs"}
+        isCentered
+      >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{selectTable ? selectTable : "테이블"}</ModalHeader>
+          <ModalHeader>{selectTable} 데이터</ModalHeader>
           <ModalCloseButton />
-          <ModalBody overflow="scroll" maxH="600px">
-            <TableContainer>
-              <Table variant="simple">
-                <Thead>
-                  <Tr>{handleTh()}</Tr>
-                </Thead>
-                <Tbody>{handleTd()}</Tbody>
-              </Table>
-            </TableContainer>
-          </ModalBody>
+          {previewData?.length ? (
+            <ModalBody overflow="scroll" maxH="600px">
+              <TableContainer>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>{handleTh()}</Tr>
+                  </Thead>
+                  <Tbody>{handleTd()}</Tbody>
+                </Table>
+              </TableContainer>
+            </ModalBody>
+          ) : (
+            <ModalBody>
+              <FormControl isRequired>
+                <Flex alignItems="center">
+                  <FormLabel htmlFor="ipAddressA" w="8rem" m="0" fontSize="sm">
+                    건수
+                  </FormLabel>
+                  <NumberInput defaultValue={count} min={0} max={count}>
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </Flex>
+              </FormControl>
+            </ModalBody>
+          )}
           <ModalFooter>
-            <Button onClick={onClose}>닫기</Button>
+            {previewData?.length ? (
+              <Button onClick={onClose}>닫기</Button>
+            ) : (
+              <Button
+                onClick={handleFetchData}
+                isLoading={previewLoading}
+                loadingText="불러오는 중"
+              >
+                불러오기
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>

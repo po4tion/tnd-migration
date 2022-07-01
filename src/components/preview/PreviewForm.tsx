@@ -1,30 +1,13 @@
 import { Flex, Text, VStack } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
-import {
-  asisConnectState,
-  asisPreviewState,
-  selectSchemaState,
-  selectTableState,
-} from "../../atoms";
+import { asisConnectState, asisPreviewState, countState } from "../../atoms";
 import PreviewSchema from "./PreviewSchema";
 import PreviewTable from "./PreviewTable";
 
 function PreviewForm() {
   const asisConnect = useRecoilValue(asisConnectState);
   const asisPreview = useRecoilValue(asisPreviewState);
-  const schema = useRecoilValue(selectSchemaState);
-  const table = useRecoilValue(selectTableState);
-
-  const count = () => {
-    return (
-      <Text>
-        {schema && table && asisPreview
-          ? asisPreview[schema]["TABLE_NAME"][table]
-          : 0}{" "}
-        건
-      </Text>
-    );
-  };
+  const count = useRecoilValue(countState);
 
   return (
     <VStack w="20rem" mt="5">
@@ -32,7 +15,7 @@ function PreviewForm() {
       <PreviewTable isConnect={asisConnect} list={asisPreview} />
       <Flex justify="space-between" width="100%">
         <Text>총 건수</Text>
-        {count()}
+        <Text>{count} 건</Text>
       </Flex>
     </VStack>
   );

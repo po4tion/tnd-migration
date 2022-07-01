@@ -3,6 +3,8 @@ import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
+  asisPreviewState,
+  countState,
   previewDataState,
   selectSchemaState,
   selectTableState,
@@ -12,6 +14,9 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
   const selectSchema = useRecoilValue(selectSchemaState);
   const setSelectTable = useSetRecoilState(selectTableState);
   const resetPreviewData = useResetRecoilState(previewDataState);
+  const asisPreview = useRecoilValue(asisPreviewState);
+  const setCount = useSetRecoilState(countState);
+  const schema = useRecoilValue(selectSchemaState);
 
   const options = useCallback(() => {
     const tableName = list?.[selectSchema as string];
@@ -36,9 +41,10 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
         setSelectTable(null);
       } else {
         setSelectTable(value);
+        setCount(asisPreview[schema as string]["TABLE_NAME"][value]);
       }
     },
-    [resetPreviewData, setSelectTable]
+    [resetPreviewData, setSelectTable, setCount, asisPreview, schema]
   );
 
   return (

@@ -19,11 +19,12 @@ function PreviewSchema({ isConnect, list }: { isConnect: boolean; list: any }) {
 
       if (!value.length) {
         setSelectSchema(null);
-        setSelectTable(null);
-        resetPreviewData();
       } else {
         setSelectSchema(value);
       }
+
+      setSelectTable(null);
+      resetPreviewData();
     },
     [resetPreviewData, setSelectSchema, setSelectTable]
   );

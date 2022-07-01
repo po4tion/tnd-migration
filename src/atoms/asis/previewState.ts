@@ -30,3 +30,8 @@ export const asisColumnState = atom<any>({
   key: "asisColumnState",
   default: null,
 });
+
+export const countState = atom<number>({
+  key: "countState",
+  default: 0,
+});
