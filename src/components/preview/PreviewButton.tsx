@@ -27,9 +27,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  asisColumnState,
   asisDbState,
   asisDbTypeState,
   asisIdState,
@@ -42,7 +41,7 @@ import {
   selectSchemaState,
   selectTableState,
 } from "../../atoms";
-import { handleAsisColumn, handleAsisPreview, objectDepth } from "../../utils";
+import { handleAsisPreview } from "../../utils";
 
 function PreviewButton() {
   const selectSchema = useRecoilValue(selectSchemaState);
@@ -54,7 +53,6 @@ function PreviewButton() {
   const asisId = useRecoilValue(asisIdState);
   const asisPassword = useRecoilValue(asisPasswordState);
   const [previewData, setPreviewData] = useRecoilState(previewDataState);
-  const setAsisColumn = useSetRecoilState(asisColumnState);
   const [previewLoading, setPreviewLoading] =
     useRecoilState(previewLoadingState);
   const count = useRecoilValue(countState);
@@ -76,17 +74,10 @@ function PreviewButton() {
 
     try {
       const fetchData = await handleAsisPreview(status);
-      const fetchColumn = await handleAsisColumn(status);
 
       if (fetchData?.length) {
         setPreviewData(fetchData);
         setPreviewLoading(false);
-      }
-
-      if (!fetchColumn?.ConnectionSuccess) {
-        const result = objectDepth(fetchColumn, selectTable as string);
-
-        setAsisColumn(result);
       }
     } catch {
       console.error("connect Error!");
@@ -103,7 +94,6 @@ function PreviewButton() {
     selectTable,
     setPreviewData,
     setPreviewLoading,
-    setAsisColumn,
   ]);
 
   const handleTh = useCallback(() => {
