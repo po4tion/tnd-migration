@@ -1,22 +1,17 @@
 import { VStack } from "@chakra-ui/react";
-import {
-  Db,
-  DbType,
-  Identification,
-  IpAddress,
-  Password,
-  Port,
-} from "./asisCtrl";
+import { DbTypeSelect, DbValueInput } from "./asis";
+
+const items = ["ip", "port", "db", "id", "pw"];
 
 function StatusFormAsis() {
+  const labels = () => {
+    return items.map((item) => <DbValueInput type={item} key={item} />);
+  };
+
   return (
     <VStack w="20rem" mt="2">
-      <DbType />
-      <IpAddress />
-      <Port />
-      <Db />
-      <Identification />
-      <Password />
+      <DbTypeSelect />
+      {labels()}
     </VStack>
   );
 }

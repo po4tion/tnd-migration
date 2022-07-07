@@ -1,10 +1,10 @@
 import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
-import { useSetRecoilState } from "recoil";
-import { asisDbTypeState } from "../../../atoms";
+import { useRecoilState } from "recoil";
+import { asisDb } from "../../../atoms";
 
-function DbType() {
-  const setAsisDbTypeState = useSetRecoilState(asisDbTypeState);
+function DbTypeSelect() {
+  const [asis, setAsis] = useRecoilState(asisDb);
 
   /* *
    * Select defaultValue type : ""
@@ -13,19 +13,22 @@ function DbType() {
     (e: ChangeEvent<HTMLSelectElement>) => {
       const { value } = e.target;
 
-      setAsisDbTypeState(value);
+      setAsis({
+        ...asis,
+        dbType: value,
+      });
     },
-    [setAsisDbTypeState]
+    [asis, setAsis]
   );
 
   return (
     <FormControl isRequired>
       <Flex alignItems="center">
-        <FormLabel htmlFor="dbTypeA" w="8rem" m="0" fontSize="sm">
+        <FormLabel htmlFor="asisDbType" w="8rem" m="0" fontSize="sm">
           DB 종류
         </FormLabel>
         <Select
-          id="dbTypeA"
+          id="asisDbType"
           placeholder="선택"
           w="12rem"
           size="sm"
@@ -40,4 +43,4 @@ function DbType() {
   );
 }
 
-export default DbType;
+export default DbTypeSelect;

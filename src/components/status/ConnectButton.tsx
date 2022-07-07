@@ -1,68 +1,12 @@
-import { Box, Button, useToast } from "@chakra-ui/react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  asisConnectState,
-  asisDbState,
-  asisDbTypeState,
-  asisIdState,
-  asisIpAddressState,
-  asisPasswordState,
-  asisPortState,
-} from "../../atoms";
-import { asisPreviewState } from "../../atoms/asis/previewState";
-import { handleAsisConenct } from "../../utils";
+import { Box, Button } from "@chakra-ui/react";
+import { useRecoilValue } from "recoil";
+import { asisDb } from "../../atoms";
 
 function ConnectButton({ type }: { type: string }) {
-  const asisDbType = useRecoilValue(asisDbTypeState);
-  const asisIpAddress = useRecoilValue(asisIpAddressState);
-  const asisPort = useRecoilValue(asisPortState);
-  const asisDb = useRecoilValue(asisDbState);
-  const asisId = useRecoilValue(asisIdState);
-  const asisPassword = useRecoilValue(asisPasswordState);
-  const setAsisConnect = useSetRecoilState(asisConnectState);
-  const setConnectState = useSetRecoilState(asisPreviewState);
-  const toast = useToast();
+  const asis = useRecoilValue(asisDb);
 
-  const handleConnect = async () => {
-    const status = {
-      asisDbType,
-      asisIpAddress,
-      asisPort,
-      asisDb,
-      asisId,
-      asisPassword,
-    };
-
-    try {
-      const fetchData = await handleAsisConenct(status);
-      const { ConnectionSuccess, SCHEMA_LIST } = fetchData;
-
-      /* *
-       * fetching success / failure
-       */
-      if (ConnectionSuccess) {
-        setAsisConnect(true);
-        setConnectState(SCHEMA_LIST);
-        toast({
-          title: "연결 성공",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-          position: "bottom-right",
-        });
-      } else {
-        toast({
-          title: "연결 실패",
-          description: "DB 정보를 확인해주세요.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-          position: "bottom-right",
-        });
-      }
-    } catch {
-      console.error("Connect Error!");
-    }
+  const handleConnect = () => {
+    console.log(asis);
   };
 
   return (
