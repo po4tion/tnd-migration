@@ -1,6 +1,6 @@
 import { Box, Heading } from "@chakra-ui/react";
 
-function ColumnInfoHeader() {
+function ColumnHeader() {
   return (
     <Box>
       <Heading as="h3" size="sm" textAlign="center">
@@ -10,4 +10,4 @@ function ColumnInfoHeader() {
   );
 }
 
-export default ColumnInfoHeader;
+export default ColumnHeader;

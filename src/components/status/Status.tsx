@@ -7,7 +7,6 @@ function Status({ type }: { type: string }) {
   return (
     <MethodLayout>
       <StatusHeader type={type} />
-      {/* {type === "ASIS" ? <StatusAsis /> : <StatusFormTobe />} */}
       <StatusTable analysis={type} />
       <Connect type={type} />
     </MethodLayout>

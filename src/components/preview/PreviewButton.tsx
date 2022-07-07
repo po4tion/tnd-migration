@@ -41,6 +41,7 @@ import {
 import { handlePreview } from "../../utils";
 
 function PreviewButton() {
+  // value
   const schema = useRecoilValue(selectSchema);
   const table = useRecoilValue(selectTable);
   const asis = useRecoilValue(asisDb);
@@ -48,6 +49,8 @@ function PreviewButton() {
   const [loading, setLoading] = useRecoilState(previewLoading);
   const count = useRecoilValue(countState);
   const [sliceValue, setSliceValue] = useRecoilState(sliceState);
+
+  // chakra
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleFetchData = useCallback(async () => {

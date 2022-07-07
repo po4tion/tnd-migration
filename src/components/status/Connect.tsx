@@ -5,9 +5,14 @@ import { asisConnectState, asisDb, previewList } from "../../atoms";
 import { handleConenct } from "../../utils";
 
 function Connect({ type }: { type: string }) {
+  // value
   const asis = useRecoilValue(asisDb);
+
+  // set
   const setConnect = useSetRecoilState(asisConnectState);
   const setPrevList = useSetRecoilState(previewList);
+
+  // chakra
   const toast = useToast();
 
   const handleConnect = useCallback(async () => {

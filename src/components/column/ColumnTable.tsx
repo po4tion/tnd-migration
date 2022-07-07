@@ -51,7 +51,7 @@ function Skeletons() {
   );
 }
 
-function ColumnForm() {
+function ColumnTable() {
   const column = useRecoilValue(asisColumn);
 
   const handleTr = useCallback(() => {
@@ -156,4 +156,4 @@ function ColumnForm() {
   );
 }
 
-export default ColumnForm;
+export default ColumnTable;

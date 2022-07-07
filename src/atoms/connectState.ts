@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { connectType } from "../../types";
+import { connectType } from "../types";
 
 export const asisConnectState = atom<boolean>({
   key: "asisConnectState",

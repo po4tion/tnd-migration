@@ -1,6 +1,6 @@
 import { Status } from "../status";
 import { Preview } from "../preview";
-import { ColumnInfo } from "../columnInfo";
+import { Column } from "../column";
 import { Mapping } from "../mapping";
 import { Box } from "@chakra-ui/react";
 
@@ -16,7 +16,7 @@ function Template({ type }: { type: string }) {
     >
       <Status type={type} />
       <PrevOrMap type={type} />
-      <ColumnInfo type={type} />
+      <Column type={type} />
     </Box>
   );
 }

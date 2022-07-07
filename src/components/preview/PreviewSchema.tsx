@@ -12,8 +12,11 @@ import {
 } from "../../atoms";
 
 function PreviewSchema({ isConnect, list }: { isConnect: boolean; list: any }) {
+  // set
   const setSelectSchema = useSetRecoilState(selectSchema);
   const setSelectTable = useSetRecoilState(selectTable);
+
+  // reset
   const resetPreviewData = useResetRecoilState(selectPreview);
   const resetCount = useResetRecoilState(countState);
   const resetSliceValue = useResetRecoilState(sliceState);
