@@ -3,7 +3,7 @@ import { Preview } from "../preview";
 import { ColumnInfo } from "../columnInfo";
 import { Box } from "@chakra-ui/react";
 
-function Template() {
+function AsisMain() {
   return (
     <Box
       boxShadow="rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
@@ -16,4 +16,4 @@ function Template() {
   );
 }
 
-export default Template;
+export default AsisMain;

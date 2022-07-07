@@ -1,7 +1,7 @@
 import { Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
 import { useRecoilState } from "recoil";
-import { asisDb } from "../../../atoms";
+import { asisDb } from "../../atoms";
 
 function DbValueInput({ type }: { type: string }) {
   const [asis, setAsis] = useRecoilState(asisDb);

@@ -1,7 +1,7 @@
 import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
 import { useRecoilState } from "recoil";
-import { asisDb } from "../../../atoms";
+import { asisDb } from "../../atoms";
 
 function DbTypeSelect() {
   const [asis, setAsis] = useRecoilState(asisDb);
