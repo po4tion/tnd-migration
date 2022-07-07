@@ -33,6 +33,7 @@ function DbType() {
         >
           <option value="mssql">MSSQL</option>
           <option value="mysql">MySQL</option>
+          <option value="postgresql">PostgreSQL</option>
         </Select>
       </Flex>
     </FormControl>

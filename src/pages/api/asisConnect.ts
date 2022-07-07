@@ -24,22 +24,13 @@ async function asisConnect(
           asisPassword,
         } = status;
 
-        // const response = await instance.post("/database/connect/", {
-        //   dbms: asisDbType,
-        //   server: asisIpAddress,
-        //   port: asisPort,
-        //   database: asisDb,
-        //   username: asisId,
-        //   password: asisPassword,
-        // });
-
         const response = await instance.post("/database/connect/", {
-          dbms: "MSSQL",
-          server: "124.53.4.95",
-          port: 31433,
-          database: "AdventureWorks2019",
-          username: "tnd",
-          password: "tnd123!@#",
+          dbms: asisDbType,
+          server: asisIpAddress,
+          port: asisPort,
+          database: asisDb,
+          username: asisId,
+          password: asisPassword,
         });
 
         res.status(200).json(response.data);

@@ -26,26 +26,15 @@ async function asisPreview(
           selectTable,
         } = status;
 
-        // const response = await instance.post("/database/tabledata/", {
-        //   dbms: asisDbType,
-        //   server: asisIpAddress,
-        //   port: asisPort,
-        //   database: asisDb,
-        //   username: asisId,
-        //   password: asisPassword,
-        //   schema: selectSchema,
-        //   table: selectTable,
-        // });
-
         const response = await instance.post("/database/tabledata/", {
-          dbms: "MSSQL",
-          server: "124.53.4.95",
-          port: 31433,
-          database: "AdventureWorks2019",
-          username: "tnd",
-          password: "tnd123!@#",
-          schema: status.selectSchema,
-          table: status.selectTable,
+          dbms: asisDbType,
+          server: asisIpAddress,
+          port: asisPort,
+          database: asisDb,
+          username: asisId,
+          password: asisPassword,
+          schema: selectSchema,
+          table: selectTable,
         });
 
         res.status(200).json(response.data.data);
