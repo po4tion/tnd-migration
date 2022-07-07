@@ -18,7 +18,10 @@ function Connect({ type }: { type: string }) {
   const handleConnect = useCallback(async () => {
     try {
       const data = await handleConenct(asis);
-      const { ConnectionSuccess, SCHEMA_LIST } = data;
+      const {
+        ConnectionSuccess,
+        SCHEMA_LIST,
+      }: { ConnectionSuccess: boolean; SCHEMA_LIST: any } = data;
 
       /* *
        * fetching success / failure

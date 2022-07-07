@@ -6,7 +6,7 @@ const items = ["ip", "port", "db", "id", "pw"];
 
 function StatusTable({ analysis }: { analysis: string }) {
   const labels = () => {
-    return items.map((item) => (
+    return items.map((item: string) => (
       <DbValueInput type={item} key={item} analysis={analysis} />
     ));
   };
