@@ -2,7 +2,7 @@ import { MethodLayout } from "../layout";
 import StatusAsis from "./StatusAsis";
 import StatusHeader from "./StatusHeader";
 import Connect from "./Connect";
-import StatusFormTobe from "./StatusFormTobe";
+import StatusFormTobe from "./StatusTobe";
 
 function Status({ type }: { type: string }) {
   return (

@@ -3,21 +3,21 @@ import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import {
-  asisColumnState,
+  asisColumn,
   countState,
-  previewDataState,
-  selectSchemaState,
-  selectTableState,
+  selectPreview,
+  selectSchema,
+  selectTable,
   sliceState,
 } from "../../atoms";
 
 function PreviewSchema({ isConnect, list }: { isConnect: boolean; list: any }) {
-  const setSelectSchema = useSetRecoilState(selectSchemaState);
-  const setSelectTable = useSetRecoilState(selectTableState);
-  const resetPreviewData = useResetRecoilState(previewDataState);
+  const setSelectSchema = useSetRecoilState(selectSchema);
+  const setSelectTable = useSetRecoilState(selectTable);
+  const resetPreviewData = useResetRecoilState(selectPreview);
   const resetCount = useResetRecoilState(countState);
   const resetSliceValue = useResetRecoilState(sliceState);
-  const resetColumn = useResetRecoilState(asisColumnState);
+  const resetColumn = useResetRecoilState(asisColumn);
 
   const handleSelect = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {

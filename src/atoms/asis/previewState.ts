@@ -1,33 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { atom } from "recoil";
 
-export const previewLoadingState = atom<boolean>({
-  key: "previewLoadingState",
+export const previewLoading = atom<boolean>({
+  key: "previewLoading",
   default: false,
 });
 
-export const asisPreviewState = atom<any>({
-  key: "asisPreviewState",
+export const previewList = atom<any>({
+  key: "previewList",
   default: null,
 });
 
-export const selectSchemaState = atom<string | null>({
-  key: "selectSchemaState",
+export const selectSchema = atom<string | null>({
+  key: "selectSchema",
   default: null,
 });
 
-export const selectTableState = atom<string | null>({
-  key: "selectTableState",
+export const selectTable = atom<string | null>({
+  key: "selectTable",
   default: null,
 });
 
-export const previewDataState = atom<any>({
-  key: "previewDataState",
+export const selectPreview = atom<any>({
+  key: "selectPreview",
   default: null,
 });
 
-export const asisColumnState = atom<any>({
-  key: "asisColumnState",
+export const asisColumn = atom<any>({
+  key: "asisColumn",
   default: null,
 });
 

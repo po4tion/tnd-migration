@@ -7,11 +7,6 @@ export interface asisConnectType {
   readonly asisPassword: string | null;
 }
 
-export interface asisPreviewType extends asisConnectType {
-  readonly selectSchema: string | null;
-  readonly selectTable: string | null;
-}
-
 export interface connectType {
   dbType: string | null;
   ip: string | null;
@@ -19,4 +14,9 @@ export interface connectType {
   db: string | null;
   id: string | null;
   pw: string | null;
+}
+
+export interface previewType extends connectType {
+  schema: string | null;
+  table: string | null;
 }

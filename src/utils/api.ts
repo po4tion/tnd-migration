@@ -1,5 +1,5 @@
 import axios from "axios";
-import { asisPreviewType, connectType } from "../types";
+import { connectType, previewType } from "../types";
 
 export const handleAsisConenct = async (status: connectType) => {
   const result = await axios
@@ -11,7 +11,7 @@ export const handleAsisConenct = async (status: connectType) => {
   return result;
 };
 
-export const handleAsisPreview = async (status: asisPreviewType) => {
+export const handleAsisPreview = async (status: previewType) => {
   const result = await axios
     .post("/api/asisPreview", {
       status,

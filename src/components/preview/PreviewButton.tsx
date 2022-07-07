@@ -30,100 +30,77 @@ import {
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  asisDbState,
-  asisDbTypeState,
-  asisIdState,
-  asisIpAddressState,
-  asisPasswordState,
-  asisPortState,
+  asisDb,
   countState,
-  previewDataState,
-  previewLoadingState,
-  selectSchemaState,
-  selectTableState,
+  selectPreview,
+  previewLoading,
+  selectSchema,
+  selectTable,
   sliceState,
 } from "../../atoms";
 import { handleAsisPreview } from "../../utils";
 
 function PreviewButton() {
-  const selectSchema = useRecoilValue(selectSchemaState);
-  const selectTable = useRecoilValue(selectTableState);
-  const asisDbType = useRecoilValue(asisDbTypeState);
-  const asisIpAddress = useRecoilValue(asisIpAddressState);
-  const asisPort = useRecoilValue(asisPortState);
-  const asisDb = useRecoilValue(asisDbState);
-  const asisId = useRecoilValue(asisIdState);
-  const asisPassword = useRecoilValue(asisPasswordState);
-  const [previewData, setPreviewData] = useRecoilState(previewDataState);
-  const [previewLoading, setPreviewLoading] =
-    useRecoilState(previewLoadingState);
+  const schema = useRecoilValue(selectSchema);
+  const table = useRecoilValue(selectTable);
+  const asis = useRecoilValue(asisDb);
+  const [preview, setPreview] = useRecoilState(selectPreview);
+  const [loading, setLoading] = useRecoilState(previewLoading);
   const count = useRecoilValue(countState);
   const [sliceValue, setSliceValue] = useRecoilState(sliceState);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleFetchData = useCallback(async () => {
-    setPreviewLoading(true);
+    setLoading(true);
 
     if (!sliceValue) {
       setSliceValue(count);
     }
 
-    const status = {
-      asisDbType,
-      asisIpAddress,
-      asisPort,
-      asisDb,
-      asisId,
-      asisPassword,
-      selectSchema,
-      selectTable,
-    };
-
     try {
-      const fetchData = await handleAsisPreview(status);
+      const fetchData = await handleAsisPreview({
+        ...asis,
+        schema,
+        table,
+      });
 
       if (fetchData?.length) {
-        setPreviewData(fetchData);
-        setPreviewLoading(false);
+        setPreview(fetchData);
+        setLoading(false);
       } else {
-        setPreviewLoading(false);
+        setLoading(false);
       }
     } catch {
       console.error("connect Error!");
-      setPreviewLoading(false);
+      setLoading(false);
     }
   }, [
-    asisDb,
-    asisDbType,
-    asisId,
-    asisIpAddress,
-    asisPassword,
-    asisPort,
+    asis,
     count,
-    selectSchema,
-    selectTable,
-    setPreviewData,
-    setPreviewLoading,
+    schema,
+    setPreview,
+    setLoading,
     setSliceValue,
     sliceValue,
+    table,
   ]);
 
   const handleTh = useCallback(() => {
-    if (previewData === null || !previewData?.length) {
+    if (preview === null || !preview?.length) {
       return null;
     }
 
-    return Object.keys(previewData[0])?.map((key: string) => (
+    return Object.keys(preview[0])?.map((key: string) => (
       <Th key={key}>{key}</Th>
     ));
-  }, [previewData]);
+  }, [preview]);
 
   const handleTd = useCallback(() => {
-    if (previewData === null) {
+    if (preview === null) {
       return null;
     }
 
-    return previewData
+    return preview
       ?.slice(0, sliceValue)
       .map((obj: { [x: string]: any }, idx: number) => (
         <Tr key={idx}>
@@ -132,7 +109,7 @@ function PreviewButton() {
           ))}
         </Tr>
       ));
-  }, [previewData, sliceValue]);
+  }, [preview, sliceValue]);
 
   const handleCount = (value: string) => {
     setSliceValue(parseInt(value));
@@ -155,16 +132,16 @@ function PreviewButton() {
       <Modal
         onClose={onClose}
         isOpen={isOpen}
-        size={previewData?.length ? "6xl" : "xs"}
+        size={preview?.length ? "6xl" : "xs"}
         isCentered
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Center>{selectTable} 데이터</Center>
+            <Center>{table} 데이터</Center>
           </ModalHeader>
           <ModalCloseButton />
-          {previewData?.length ? (
+          {preview?.length ? (
             <ModalBody overflow="scroll" maxH="600px">
               <TableContainer>
                 <Table variant="simple">
@@ -199,12 +176,12 @@ function PreviewButton() {
             </ModalBody>
           )}
           <ModalFooter>
-            {previewData?.length ? (
+            {preview?.length ? (
               <Button onClick={onClose}>닫기</Button>
             ) : (
               <Button
                 onClick={handleFetchData}
-                isLoading={previewLoading}
+                isLoading={loading}
                 loadingText="불러오는 중"
               >
                 불러오기

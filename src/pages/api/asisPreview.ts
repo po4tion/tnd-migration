@@ -15,26 +15,17 @@ async function asisPreview(
     case "POST":
       try {
         const { status } = req.body;
-        const {
-          asisDbType,
-          asisIpAddress,
-          asisPort,
-          asisDb,
-          asisId,
-          asisPassword,
-          selectSchema,
-          selectTable,
-        } = status;
+        const { dbType, ip, port, db, id, pw, schema, table } = status;
 
         const response = await instance.post("/database/tabledata/", {
-          dbms: asisDbType,
-          server: asisIpAddress,
-          port: asisPort,
-          database: asisDb,
-          username: asisId,
-          password: asisPassword,
-          schema: selectSchema,
-          table: selectTable,
+          dbms: dbType,
+          server: ip,
+          port: port,
+          database: db,
+          username: id,
+          password: pw,
+          schema: schema,
+          table: table,
         });
 
         res.status(200).json(response.data.data);

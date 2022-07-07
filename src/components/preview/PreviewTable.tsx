@@ -3,40 +3,29 @@ import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback } from "react";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
-  asisColumnState,
-  asisDbState,
-  asisDbTypeState,
-  asisIdState,
-  asisIpAddressState,
-  asisPasswordState,
-  asisPortState,
-  asisPreviewState,
+  asisColumn,
+  asisDb,
+  previewList,
   countState,
-  previewDataState,
-  selectSchemaState,
-  selectTableState,
+  selectPreview,
+  selectSchema,
+  selectTable,
   sliceState,
 } from "../../atoms";
 import { handleAsisColumn, objectDepth } from "../../utils";
 
 function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
-  const selectSchema = useRecoilValue(selectSchemaState);
-  const setSelectTable = useSetRecoilState(selectTableState);
-  const resetPreviewData = useResetRecoilState(previewDataState);
-  const asisPreview = useRecoilValue(asisPreviewState);
+  const setTable = useSetRecoilState(selectTable);
+  const resetPreview = useResetRecoilState(selectPreview);
+  const prevList = useRecoilValue(previewList);
   const setCount = useSetRecoilState(countState);
-  const schema = useRecoilValue(selectSchemaState);
-  const setAsisColumn = useSetRecoilState(asisColumnState);
-  const asisDbType = useRecoilValue(asisDbTypeState);
-  const asisIpAddress = useRecoilValue(asisIpAddressState);
-  const asisPort = useRecoilValue(asisPortState);
-  const asisDb = useRecoilValue(asisDbState);
-  const asisId = useRecoilValue(asisIdState);
-  const asisPassword = useRecoilValue(asisPasswordState);
-  const resetSliceValue = useResetRecoilState(sliceState);
+  const schema = useRecoilValue(selectSchema);
+  const setColumn = useSetRecoilState(asisColumn);
+  const resetSlice = useResetRecoilState(sliceState);
+  const asis = useRecoilValue(asisDb);
 
   const options = useCallback(() => {
-    const tableName = list?.[selectSchema as string];
+    const tableName = list?.[schema as string];
 
     if (tableName === undefined) {
       return null;
@@ -47,58 +36,49 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
         {key}
       </option>
     ));
-  }, [list, selectSchema]);
+  }, [list, schema]);
 
   const handleSelect = useCallback(
     async (e: ChangeEvent<HTMLSelectElement>) => {
       const { value } = e.target;
-      const status = {
-        asisDbType,
-        asisIpAddress,
-        asisPort,
-        asisDb,
-        asisId,
-        asisPassword,
-        selectSchema,
-        selectTable: value,
-      };
-      resetSliceValue();
+
+      resetSlice();
 
       if (!value.length) {
-        setSelectTable(null);
+        setTable(null);
         setCount(0);
       } else {
-        setSelectTable(value);
-        setCount(asisPreview[schema as string]["TABLE_NAME"][value]);
+        setTable(value);
+        setCount(prevList[schema as string]["TABLE_NAME"][value]);
       }
 
-      resetPreviewData();
+      resetPreview();
 
       try {
-        const fetchColumn = await handleAsisColumn(status);
+        const fetchColumn = await handleAsisColumn({
+          ...asis,
+          schema,
+          table: value,
+        });
 
         if (fetchColumn?.ConnectionSuccess) {
           const result = objectDepth(fetchColumn, value);
 
-          setAsisColumn(result);
+          setColumn(result);
         }
-      } catch {}
+      } catch (err) {
+        console.error("Preview Error! ", err);
+      }
     },
     [
-      asisDbType,
-      asisIpAddress,
-      asisPort,
-      asisDb,
-      asisId,
-      asisPassword,
-      selectSchema,
-      resetSliceValue,
-      resetPreviewData,
-      setSelectTable,
+      resetSlice,
+      resetPreview,
+      setTable,
       setCount,
-      asisPreview,
+      prevList,
       schema,
-      setAsisColumn,
+      asis,
+      setColumn,
     ]
   );
 

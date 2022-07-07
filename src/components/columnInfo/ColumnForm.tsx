@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
-import { asisColumnState } from "../../atoms";
+import { asisColumn } from "../../atoms";
 import { asisColumnType } from "../../types/columnType";
 
 function Skeletons() {
@@ -52,10 +52,10 @@ function Skeletons() {
 }
 
 function ColumnForm() {
-  const asisColumn = useRecoilValue(asisColumnState);
+  const column = useRecoilValue(asisColumn);
 
   const handleTr = useCallback(() => {
-    return asisColumn?.map((items: asisColumnType) => {
+    return column?.map((items: asisColumnType) => {
       const { COLUMN_ID, COLUMN_NAME, COL_TYPE, NULL_YN, PK, FK, UQ } = items;
 
       return (
@@ -130,7 +130,7 @@ function ColumnForm() {
         </Tr>
       );
     });
-  }, [asisColumn]);
+  }, [column]);
 
   return (
     <Box overflow="scroll" maxH="840px">
@@ -149,7 +149,7 @@ function ColumnForm() {
             </Tr>
           </Thead>
 
-          <Tbody>{asisColumn ? handleTr() : <Skeletons />}</Tbody>
+          <Tbody>{column ? handleTr() : <Skeletons />}</Tbody>
         </Table>
       </TableContainer>
     </Box>

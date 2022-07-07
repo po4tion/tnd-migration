@@ -1,15 +1,16 @@
 import { Box, Button, useToast } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { asisConnectState, asisDb, asisPreviewState } from "../../atoms";
+import { asisConnectState, asisDb, previewList } from "../../atoms";
 import { handleAsisConenct } from "../../utils";
 
 function Connect({ type }: { type: string }) {
   const asis = useRecoilValue(asisDb);
   const setConnect = useSetRecoilState(asisConnectState);
-  const setPreview = useSetRecoilState(asisPreviewState);
+  const setPrevList = useSetRecoilState(previewList);
   const toast = useToast();
 
-  const handleConnect = async () => {
+  const handleConnect = useCallback(async () => {
     try {
       const data = await handleAsisConenct(asis);
       const { ConnectionSuccess, SCHEMA_LIST } = data;
@@ -20,7 +21,7 @@ function Connect({ type }: { type: string }) {
 
       if (ConnectionSuccess) {
         setConnect(true);
-        setPreview(SCHEMA_LIST);
+        setPrevList(SCHEMA_LIST);
 
         toast({
           title: "연결 성공",
@@ -42,7 +43,7 @@ function Connect({ type }: { type: string }) {
     } catch (err) {
       console.error("Connect Error!", err);
     }
-  };
+  }, [asis, setConnect, setPrevList, toast]);
 
   return (
     <Box mt="2" w="20rem">
