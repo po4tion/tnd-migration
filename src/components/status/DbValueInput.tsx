@@ -3,7 +3,7 @@ import { ChangeEvent, useCallback } from "react";
 import { useRecoilState } from "recoil";
 import { asisDb } from "../../atoms";
 
-function DbValueInput({ type }: { type: string }) {
+function DbValueInput({ type, analysis }: { type: string; analysis: string }) {
   const [asis, setAsis] = useRecoilState(asisDb);
 
   const handleAsis = useCallback(
@@ -21,11 +21,11 @@ function DbValueInput({ type }: { type: string }) {
   return (
     <FormControl isRequired>
       <Flex alignItems="center">
-        <FormLabel htmlFor={type} w="8rem" m="0" fontSize="sm">
+        <FormLabel htmlFor={`${type}-${analysis}`} w="8rem" m="0" fontSize="sm">
           {type.toUpperCase()}
         </FormLabel>
         <Input
-          id={type}
+          id={`${type}-${analysis}`}
           type={type === "pw" ? "password" : "text"}
           w="12rem"
           size="sm"

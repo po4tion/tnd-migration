@@ -1,14 +1,14 @@
 import { MethodLayout } from "../layout";
-import StatusAsis from "./StatusAsis";
+import StatusTable from "./StatusTable";
 import StatusHeader from "./StatusHeader";
 import Connect from "./Connect";
-import StatusFormTobe from "./StatusTobe";
 
 function Status({ type }: { type: string }) {
   return (
     <MethodLayout>
       <StatusHeader type={type} />
-      {type === "ASIS" ? <StatusAsis /> : <StatusFormTobe />}
+      {/* {type === "ASIS" ? <StatusAsis /> : <StatusFormTobe />} */}
+      <StatusTable analysis={type} />
       <Connect type={type} />
     </MethodLayout>
   );

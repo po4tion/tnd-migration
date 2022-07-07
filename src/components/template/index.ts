@@ -1,2 +1,1 @@
-export { default as AsisMain } from "./AsisMain";
-export { default as TemplateTobe } from "./TemplateTobe";
+export { default as Template } from "./Template";

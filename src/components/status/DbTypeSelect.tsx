@@ -3,7 +3,7 @@ import { ChangeEvent, useCallback } from "react";
 import { useRecoilState } from "recoil";
 import { asisDb } from "../../atoms";
 
-function DbTypeSelect() {
+function DbTypeSelect({ analysis }: { analysis: string }) {
   const [asis, setAsis] = useRecoilState(asisDb);
 
   /* *
@@ -24,11 +24,11 @@ function DbTypeSelect() {
   return (
     <FormControl isRequired>
       <Flex alignItems="center">
-        <FormLabel htmlFor="asisDbType" w="8rem" m="0" fontSize="sm">
+        <FormLabel htmlFor={`dbType-${analysis}`} w="8rem" m="0" fontSize="sm">
           DB 종류
         </FormLabel>
         <Select
-          id="asisDbType"
+          id={`dbType-${analysis}`}
           placeholder="선택"
           w="12rem"
           size="sm"

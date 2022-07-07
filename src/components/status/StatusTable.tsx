@@ -4,17 +4,19 @@ import DbValueInput from "./DbValueInput";
 
 const items = ["ip", "port", "db", "id", "pw"];
 
-function StatusAsis() {
+function StatusTable({ analysis }: { analysis: string }) {
   const labels = () => {
-    return items.map((item) => <DbValueInput type={item} key={item} />);
+    return items.map((item) => (
+      <DbValueInput type={item} key={item} analysis={analysis} />
+    ));
   };
 
   return (
     <VStack w="20rem" mt="2">
-      <DbTypeSelect />
+      <DbTypeSelect analysis={analysis} />
       {labels()}
     </VStack>
   );
 }
 
-export default StatusAsis;
+export default StatusTable;
