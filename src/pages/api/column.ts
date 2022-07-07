@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { instance } from "../../config";
-import { objectDepth } from "../../utils";
 
 type ResponseData = {
   readonly error: string;

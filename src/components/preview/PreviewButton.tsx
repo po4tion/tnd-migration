@@ -38,7 +38,7 @@ import {
   selectTable,
   sliceState,
 } from "../../atoms";
-import { handleAsisPreview } from "../../utils";
+import { handlePreview } from "../../utils";
 
 function PreviewButton() {
   const schema = useRecoilValue(selectSchema);
@@ -58,7 +58,7 @@ function PreviewButton() {
     }
 
     try {
-      const fetchData = await handleAsisPreview({
+      const fetchData = await handlePreview({
         ...asis,
         schema,
         table,

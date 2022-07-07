@@ -2,7 +2,7 @@ import { Box, Button, useToast } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { asisConnectState, asisDb, previewList } from "../../atoms";
-import { handleAsisConenct } from "../../utils";
+import { handleConenct } from "../../utils";
 
 function Connect({ type }: { type: string }) {
   const asis = useRecoilValue(asisDb);
@@ -12,7 +12,7 @@ function Connect({ type }: { type: string }) {
 
   const handleConnect = useCallback(async () => {
     try {
-      const data = await handleAsisConenct(asis);
+      const data = await handleConenct(asis);
       const { ConnectionSuccess, SCHEMA_LIST } = data;
 
       /* *

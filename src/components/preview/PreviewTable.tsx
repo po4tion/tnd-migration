@@ -12,17 +12,22 @@ import {
   selectTable,
   sliceState,
 } from "../../atoms";
-import { handleAsisColumn, objectDepth } from "../../utils";
+import { handleColumn, objectDepth } from "../../utils";
 
 function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
+  // set
   const setTable = useSetRecoilState(selectTable);
-  const resetPreview = useResetRecoilState(selectPreview);
-  const prevList = useRecoilValue(previewList);
   const setCount = useSetRecoilState(countState);
-  const schema = useRecoilValue(selectSchema);
   const setColumn = useSetRecoilState(asisColumn);
-  const resetSlice = useResetRecoilState(sliceState);
+
+  // value
   const asis = useRecoilValue(asisDb);
+  const prevList = useRecoilValue(previewList);
+  const schema = useRecoilValue(selectSchema);
+
+  // reset
+  const resetSlice = useResetRecoilState(sliceState);
+  const resetPreview = useResetRecoilState(selectPreview);
 
   const options = useCallback(() => {
     const tableName = list?.[schema as string];
@@ -55,7 +60,7 @@ function PreviewTable({ isConnect, list }: { isConnect: boolean; list: any }) {
       resetPreview();
 
       try {
-        const fetchColumn = await handleAsisColumn({
+        const fetchColumn = await handleColumn({
           ...asis,
           schema,
           table: value,

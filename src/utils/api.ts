@@ -1,9 +1,9 @@
 import axios from "axios";
 import { connectType, previewType } from "../types";
 
-export const handleAsisConenct = async (status: connectType) => {
+export const handleConenct = async (status: connectType) => {
   const result = await axios
-    .post("/api/asisConnect", {
+    .post("/api/connect", {
       status,
     })
     .then((response) => response.data);
@@ -11,9 +11,9 @@ export const handleAsisConenct = async (status: connectType) => {
   return result;
 };
 
-export const handleAsisPreview = async (status: previewType) => {
+export const handlePreview = async (status: previewType) => {
   const result = await axios
-    .post("/api/asisPreview", {
+    .post("/api/preview", {
       status,
     })
     .then((response) => response.data);
@@ -22,9 +22,9 @@ export const handleAsisPreview = async (status: previewType) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const handleAsisColumn = async (status: any) => {
+export const handleColumn = async (status: any) => {
   const result = await axios
-    .post("/api/asisColumn", {
+    .post("/api/column", {
       status,
     })
     .then((response) => response.data);
